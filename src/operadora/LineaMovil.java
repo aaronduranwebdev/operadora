@@ -2,24 +2,20 @@ package operadora;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class LineaMovil {
 
-    private int id;
     private int contrato;
     private String numTelefono;
     private double precio;
 
-    public LineaMovil(int id, int contrato, String numTelefono, double precio) {
-        this.id = id;
+    public LineaMovil(int contrato, String numTelefono, double precio) {
         this.contrato = contrato;
         this.numTelefono = numTelefono;
         this.precio = precio;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getContrato() {
@@ -32,6 +28,11 @@ public class LineaMovil {
 
     public double getPrecio() {
         return precio;
+    }
+
+    @Override
+    public String toString() {
+        return "LineaMovil{" + "contrato=" + contrato + ", numTelefono=" + numTelefono + ", precio=" + precio + '}';
     }
 
 }

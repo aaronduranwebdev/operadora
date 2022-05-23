@@ -3,12 +3,15 @@ package gui;
 import bd.BDLeer;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import operadora.Cliente;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class ListarClientes extends javax.swing.JDialog {
 
@@ -18,6 +21,7 @@ public class ListarClientes extends javax.swing.JDialog {
     public ListarClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         DefaultTableModel tabla = (DefaultTableModel) tblClientes.getModel();
         ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
         Cliente cliente = null;
@@ -27,11 +31,10 @@ public class ListarClientes extends javax.swing.JDialog {
             tblClientes.setModel(tabla);
             for (int i = 0; i < listaClientes.size(); i++) {
                 cliente = listaClientes.get(i);
-                tblClientes.setValueAt(cliente.getNombre(), i, 0);
-                tblClientes.setValueAt(cliente.getApellido1(), i, 1);
-                tblClientes.setValueAt(cliente.getApellido2(), i, 2);
-                tblClientes.setValueAt(cliente.getDomicilio(), i, 3);
-                tblClientes.setValueAt(cliente.getNacionalidad(), i, 4);
+                tblClientes.setValueAt(cliente.getDni(), i, 0);
+                tblClientes.setValueAt(cliente.getNombre(), i, 1);
+                tblClientes.setValueAt(cliente.getApellido1(), i, 2);
+                tblClientes.setValueAt(cliente.getApellido2(), i, 3);
             }
         } catch (SQLException e) {
 
@@ -57,16 +60,18 @@ public class ListarClientes extends javax.swing.JDialog {
         jPanel1.setMinimumSize(new java.awt.Dimension(480, 320));
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
-                "Nombre", "Apellido 1", "Apellido 2", "Domicilio", "Nacionalidad"
+                "DNI", "Nombre", "Apellido 1", "Apellido 2"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -75,6 +80,11 @@ public class ListarClientes extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblClientes);
@@ -103,6 +113,18 @@ public class ListarClientes extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        if (evt.getClickCount() == 2) {
+            try {
+                JTable tabla = (JTable) evt.getSource();
+                VerCliente verCliente = new VerCliente(null, rootPaneCheckingEnabled, tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+                verCliente.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tblClientesMouseClicked
 
     /**
      * @param args the command line arguments

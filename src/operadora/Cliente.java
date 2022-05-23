@@ -1,37 +1,39 @@
 package operadora;
 
 import utils.Nacionalidades;
+import utils.Provincias;
 
 /**
+ * Clase Cliente que almacena la información relacionada con un cliente
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class Cliente {
 
-    private int id;
+    private String dni;
     private String nombre;
     private String apellido1;
     private String apellido2;
-    private String dni;
     private String domicilio;
     private String localidad;
-    private String provincia;
+    private Provincias provincia;
     private Nacionalidades nacionalidad;
 
-    public Cliente(int id, String nombre, String apellido1, String apellido2, String dni, String domicilio, String localidad, String provincia, Nacionalidades nacionalidad) {
-        this.id = id;
+    public Cliente(String dni, String nombre, String apellido1, String apellido2, String domicilio, String localidad, Provincias provincia, Nacionalidades nacionalidad) {
+        this.dni = dni;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.dni = dni;
         this.domicilio = domicilio;
         this.localidad = localidad;
         this.provincia = provincia;
         this.nacionalidad = nacionalidad;
     }
 
-    public int getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
     public String getNombre() {
@@ -46,10 +48,6 @@ public class Cliente {
         return apellido2;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
     public String getDomicilio() {
         return domicilio;
     }
@@ -58,7 +56,7 @@ public class Cliente {
         return localidad;
     }
 
-    public String getProvincia() {
+    public Provincias getProvincia() {
         return provincia;
     }
 
@@ -66,12 +64,9 @@ public class Cliente {
         return nacionalidad;
     }
 
-    
-
     @Override
     public String toString() {
         return "- Cliente -\n"
-                + "ID:    " + id + "\n"
                 + "Nombre:    " + nombre + "\n"
                 + "Apellido 1:    " + apellido1 + "\n"
                 + "Apellido 2:    " + apellido2 + "\n"

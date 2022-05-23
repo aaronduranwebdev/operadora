@@ -1,20 +1,15 @@
 package gui;
 
-import bd.BDLeer;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.DefaultTableModel;
-import operadora.Cliente;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -23,7 +18,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -35,146 +30,169 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenu3 = new javax.swing.JMenu();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        panelPrincipal = new javax.swing.JPanel();
+        lblBusqueda = new javax.swing.JLabel();
+        btnVerCliente = new javax.swing.JButton();
+        btnVerTelefono = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        lblAñadir = new javax.swing.JLabel();
+        btnAñadirCliente = new javax.swing.JButton();
+        btnAñadirContrato = new javax.swing.JButton();
+        btnAñadirMovil = new javax.swing.JButton();
+        btnBuscarNombre = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JMenuBar();
         mArchivo = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mVerRegistro = new javax.swing.JMenuItem();
+        mConfiguracion = new javax.swing.JMenuItem();
+        mSeparadorArchivo = new javax.swing.JPopupMenu.Separator();
+        mSalir = new javax.swing.JMenuItem();
         mClientes = new javax.swing.JMenu();
         mBuscar = new javax.swing.JMenuItem();
-        mCargarID = new javax.swing.JMenuItem();
         mListarClientes = new javax.swing.JMenuItem();
         mSeparador1 = new javax.swing.JPopupMenu.Separator();
         mAñadir = new javax.swing.JMenuItem();
-
-        jMenu3.setText("jMenu3");
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Operadora TeisMobile");
+        setResizable(false);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(50, 100));
+        panelPrincipal.setMinimumSize(new java.awt.Dimension(50, 100));
 
-        jButton1.setText("Cliente");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        lblBusqueda.setText("Búsqueda");
+
+        btnVerCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnVerCliente.setText("DNI");
+        btnVerCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVerClienteActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Contrato (ID)");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnVerTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnVerTelefono.setText("Teléfono");
+        btnVerTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnVerTelefonoActionPerformed(evt);
             }
         });
-
-        jButton3.setText("Teléfono");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel1.setText("Búsqueda");
+        lblAñadir.setText("Añadir");
 
-        jLabel2.setText("Añadir");
-
-        jButton4.setText("Cliente");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnAñadirCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAñadirCliente.setMnemonic('S');
+        btnAñadirCliente.setText("Cliente");
+        btnAñadirCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnAñadirClienteActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Contrato");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnAñadirContrato.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAñadirContrato.setText("Contrato");
+        btnAñadirContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnAñadirContratoActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Línea móvil");
+        btnAñadirMovil.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAñadirMovil.setText("Línea móvil");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(33, 33, 33)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel1)))
+        btnBuscarNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnBuscarNombre.setText("Nombre/Apell.");
+        btnBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNombreActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBuscarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(lblBusqueda))
+                    .addComponent(btnVerCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVerTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jLabel2)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(lblAñadir))
+                    .addComponent(btnAñadirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAñadirContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(lblAñadir)
+                                .addGap(12, 12, 12)
+                                .addComponent(btnAñadirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAñadirContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(lblBusqueda)
+                                .addGap(12, 12, 12)
+                                .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(btnVerTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                                .addComponent(btnBuscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 20, Short.MAX_VALUE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1)))
                 .addContainerGap())
         );
 
         mArchivo.setText("Archivo");
+        mArchivo.setToolTipText("");
 
-        jMenu4.setText("Ver registro");
-        mArchivo.add(jMenu4);
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("Salir...");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mVerRegistro.setText("Ver registro...");
+        mVerRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                mVerRegistroActionPerformed(evt);
             }
         });
-        mArchivo.add(jMenuItem1);
+        mArchivo.add(mVerRegistro);
+
+        mConfiguracion.setText("Configuración");
+        mConfiguracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mConfiguracionActionPerformed(evt);
+            }
+        });
+        mArchivo.add(mConfiguracion);
+        mArchivo.add(mSeparadorArchivo);
+
+        mSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        mSalir.setText("Salir...");
+        mSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSalirActionPerformed(evt);
+            }
+        });
+        mArchivo.add(mSalir);
 
         menuPrincipal.add(mArchivo);
 
@@ -188,15 +206,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mClientes.add(mBuscar);
-
-        mCargarID.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mCargarID.setText("Cargar por ID");
-        mCargarID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mCargarIDActionPerformed(evt);
-            }
-        });
-        mClientes.add(mCargarID);
 
         mListarClientes.setText("Listar clientes");
         mListarClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -218,51 +227,40 @@ public class Principal extends javax.swing.JFrame {
 
         menuPrincipal.add(mClientes);
 
+        jMenu1.setText("Ayuda");
+
+        jMenuItem2.setText("Acerca de...");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        menuPrincipal.add(jMenu1);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void mBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mBuscarActionPerformed
-        /*DefaultTableModel tabla = (DefaultTableModel) tblClientes.getModel();
-        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
-        Cliente cliente = null;
-        String busqueda = JOptionPane.showInputDialog("Buscar cliente...");
-        try {
-            listaClientes = BDLeer.buscarClientes(busqueda);
-            tabla.setRowCount(listaClientes.size());
-            tblClientes.setModel(tabla);
-            for (int i = 0; i < listaClientes.size(); i++) {
-                cliente = listaClientes.get(i);
-                tblClientes.setValueAt(cliente.getNombre(), i, 0);
-                tblClientes.setValueAt(cliente.getApellido1(), i, 1);
-                tblClientes.setValueAt(cliente.getApellido2(), i, 2);
-                tblClientes.setValueAt(cliente.getDomicilio(), i, 3);
-                tblClientes.setValueAt(cliente.getNacionalidad(), i, 4);
-            }
-        } catch (SQLException e) {
-            
-        }*/
+
     }//GEN-LAST:event_mBuscarActionPerformed
 
     private void mAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAñadirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mAñadirActionPerformed
-
-    private void mCargarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCargarIDActionPerformed
-
-    }//GEN-LAST:event_mCargarIDActionPerformed
 
     private void mListarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListarClientesActionPerformed
         try {
@@ -273,28 +271,36 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mListarClientesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVerClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerClienteActionPerformed
         try {
-            VerCliente verCliente = new VerCliente(this, rootPaneCheckingEnabled);
+            VerCliente verCliente = new VerCliente(this, rootPaneCheckingEnabled, "");
             verCliente.setVisible(true);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnVerClienteActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAñadirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirClienteActionPerformed
+        try {
+            AñadirCliente añadirCliente = new AñadirCliente(this, rootPaneCheckingEnabled);
+            añadirCliente.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAñadirClienteActionPerformed
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAñadirContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirContratoActionPerformed
+        try {
+            AñadirContrato añadirContrato = new AñadirContrato(this, rootPaneCheckingEnabled, "");
+            añadirContrato.setVisible(true);
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAñadirContratoActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSalirActionPerformed
         if (JOptionPane.showOptionDialog(this, "¿Seguro que quieres salir?",
                 "Salir...",
                 JOptionPane.YES_NO_OPTION,
@@ -304,7 +310,44 @@ public class Principal extends javax.swing.JFrame {
                 "Sí") == 0) {
             System.exit(0);
         };
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_mSalirActionPerformed
+
+    private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
+        try {
+            BuscarClientes buscarCliente = new BuscarClientes(this, rootPaneCheckingEnabled);
+            buscarCliente.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnBuscarNombreActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void mVerRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mVerRegistroActionPerformed
+        try {
+            VerLogs verLogs = new VerLogs(this, rootPaneCheckingEnabled);
+            verLogs.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_mVerRegistroActionPerformed
+
+    private void mConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mConfiguracionActionPerformed
+        try {
+            Configuracion configuracion = new Configuracion(this, rootPaneCheckingEnabled);
+            configuracion.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_mConfiguracionActionPerformed
+
+    private void btnVerTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTelefonoActionPerformed
+        /*try {
+            
+        }*/
+    }//GEN-LAST:event_btnVerTelefonoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,27 +376,30 @@ public class Principal extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnAñadirCliente;
+    private javax.swing.JButton btnAñadirContrato;
+    private javax.swing.JButton btnAñadirMovil;
+    private javax.swing.JButton btnBuscarNombre;
+    private javax.swing.JButton btnVerCliente;
+    private javax.swing.JButton btnVerTelefono;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAñadir;
+    private javax.swing.JLabel lblBusqueda;
     private javax.swing.JMenu mArchivo;
     private javax.swing.JMenuItem mAñadir;
     private javax.swing.JMenuItem mBuscar;
-    private javax.swing.JMenuItem mCargarID;
     private javax.swing.JMenu mClientes;
+    private javax.swing.JMenuItem mConfiguracion;
     private javax.swing.JMenuItem mListarClientes;
+    private javax.swing.JMenuItem mSalir;
     private javax.swing.JPopupMenu.Separator mSeparador1;
+    private javax.swing.JPopupMenu.Separator mSeparadorArchivo;
+    private javax.swing.JMenuItem mVerRegistro;
     private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

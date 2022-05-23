@@ -2,34 +2,94 @@ package gui;
 
 import bd.BDLeer;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import operadora.Cliente;
+import operadora.Contrato;
+import utils.Log;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class VerCliente extends javax.swing.JDialog {
-    
+
+    /**
+     * Atributo que almacena el DNI del cliente
+     */
+    private static String dniCliente;
+
     /**
      * Creates new form VerCliente
      */
-    public VerCliente(java.awt.Frame parent, boolean modal) {
+    public VerCliente(java.awt.Frame parent, boolean modal, String dni) {
         super(parent, modal);
         initComponents();
-         try {
-            Cliente cargarCliente = BDLeer.leerCliente(JOptionPane.showInputDialog("Introduce el DNI:"));
-            Controlador.establecerValor(txtNombreCliente, cargarCliente.getNombre());
-            Controlador.establecerValor(txtApellido1Cliente,cargarCliente.getApellido1());
-            Controlador.establecerValor(txtApellido2Cliente,cargarCliente.getApellido2());
-            Controlador.establecerValor(txtDNICliente,cargarCliente.getDni());
-            Controlador.establecerValor(txtDomicilioCliente,cargarCliente.getDomicilio());
-            Controlador.establecerValor(txtNacionalidadCliente,cargarCliente.getNacionalidad().toString());
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        setLocationRelativeTo(parent);
+        if (dni.isEmpty()) {
+            try {
+                this.dniCliente = JOptionPane.showInputDialog("Introduce el DNI:");
+                if (this.dniCliente.isEmpty()) {
+                    System.err.println("No se ha detectado ningún DNI");
+                    dispose();
+                }
+            } catch (NullPointerException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            this.dniCliente = dni;
+        }
+        try {
+            Cliente cliente = BDLeer.leerCliente(dniCliente);
+            // Asigna el DNI como título de la ventana
+            setTitle(cliente.getDni());
+            // Carga todos los campos
+            establecerCampoTexto(txtNombreCliente, cliente.getNombre());
+            establecerCampoTexto(txtApellido1Cliente, cliente.getApellido1());
+            establecerCampoTexto(txtApellido2Cliente, cliente.getApellido2());
+            establecerCampoTexto(txtDNICliente, cliente.getDni());
+            establecerCampoTexto(txtDomicilioCliente, cliente.getDomicilio());
+            establecerCampoTexto(txtNacionalidadCliente, cliente.getNacionalidad().toString());
+            establecerCampoTexto(txtLocalidadCliente, cliente.getLocalidad());
+            establecerCampoTexto(txtProvinciaCliente, cliente.getProvincia().toString());
+            Log.escribirLog(Log.INFO, "Acceso a cliente: " + cliente.getDni());
+        } catch (SQLException e) {
+            Log.escribirLog(Log.ERROR, e.getSQLState());
+        } catch (NullPointerException e) {
+            Log.escribirLog(Log.ERROR, e.toString());
+        }
+        DefaultTableModel tabla = (DefaultTableModel) tblContratos.getModel();
+        ArrayList<Contrato> listaContratos = new ArrayList<>();
+        Contrato contrato;
+        try {
+            listaContratos = BDLeer.listaContratos(dniCliente);
+            tabla.setRowCount(listaContratos.size());
+
+            tblContratos.setModel(tabla);
+            for (int i = 0; i < listaContratos.size(); i++) {
+                contrato = listaContratos.get(i);
+                tblContratos.setValueAt(contrato.getIban(), i, 0);
+                tblContratos.setValueAt(contrato.isFijo(), i, 1);
+                tblContratos.setValueAt(contrato.getPrecioFijo(), i, 2);
+                tblContratos.setValueAt(contrato.isInternet(), i, 3);
+                tblContratos.setValueAt(contrato.getPrecioInternet(), i, 4);
+                tblContratos.setValueAt(contrato.isMovil(), i, 5);
+                tblContratos.setValueAt(contrato.getId(), i, 6);
+            }
+            // Oculto la última columna
+            tblContratos.getColumnModel().getColumn(6).setMinWidth(0);
+            tblContratos.getColumnModel().getColumn(6).setMaxWidth(0);
+            tblContratos.getColumnModel().getColumn(6).setWidth(0);
+            // Establecer ancho de columna IBAN
+            tblContratos.getColumnModel().getColumn(0).setPreferredWidth(145);
+        } catch (SQLException e) {
+            System.out.println(e.getSQLState());
+        }
     }
 
     /**
@@ -59,10 +119,13 @@ public class VerCliente extends javax.swing.JDialog {
         lblProvincia = new javax.swing.JLabel();
         txtProvinciaCliente = new javax.swing.JTextField();
         panelContratos = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblContratos = new javax.swing.JTable();
+        btnCerrar = new javax.swing.JButton();
+        btnAñadirContrato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         panelCliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del cliente"));
 
@@ -185,18 +248,38 @@ public class VerCliente extends javax.swing.JDialog {
 
         panelContratos.setBorder(javax.swing.BorderFactory.createTitledBorder("Contratos"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblContratos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IBAN", "Fijo", "Precio", "Internet", "Precio", "Móvil", "id"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Boolean.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblContratos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblContratosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblContratos);
+        if (tblContratos.getColumnModel().getColumnCount() > 0) {
+            tblContratos.getColumnModel().getColumn(6).setPreferredWidth(0);
+        }
 
         javax.swing.GroupLayout panelContratosLayout = new javax.swing.GroupLayout(panelContratos);
         panelContratos.setLayout(panelContratosLayout);
@@ -204,16 +287,30 @@ public class VerCliente extends javax.swing.JDialog {
             panelContratosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContratosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelContratosLayout.setVerticalGroup(
             panelContratosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContratosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
+
+        btnAñadirContrato.setText("Añadir contrato");
+        btnAñadirContrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirContratoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,23 +319,73 @@ public class VerCliente extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelContratos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAñadirContrato)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCerrar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCerrar)
+                    .addComponent(btnAñadirContrato))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    // VISTA
 
+    private void establecerCampoTexto(JTextField campo, String texto) {
+        campo.setText(texto);
+    }
+
+    private void mostrarDialogoError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // FIN VISTA
+    // CONTROLADOR
+    private void tblContratosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblContratosMouseClicked
+        if (evt.getClickCount() == 2) {
+            JTable tabla = (JTable) evt.getSource();
+            if (tabla.getValueAt(tabla.getSelectedRow(), 5).toString().equals("true")) {
+                try {
+                    VerLineasMoviles verLineasMoviles = new VerLineasMoviles(null, rootPaneCheckingEnabled, Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 6).toString()));
+                    verLineasMoviles.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mostrarDialogoError(e.getMessage());
+                }
+            }
+
+        }
+    }//GEN-LAST:event_tblContratosMouseClicked
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnAñadirContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirContratoActionPerformed
+        try {
+            AñadirContrato añadirContrato = new AñadirContrato(null, rootPaneCheckingEnabled, dniCliente);
+            añadirContrato.setVisible(true);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAñadirContratoActionPerformed
+    // FIN CONTROLADOR
     /**
      * @param args the command line arguments
      */
@@ -269,7 +416,7 @@ public class VerCliente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VerCliente dialog = new VerCliente(new javax.swing.JFrame(), true);
+                VerCliente dialog = new VerCliente(new javax.swing.JFrame(), true, dniCliente);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -282,8 +429,9 @@ public class VerCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton btnAñadirContrato;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblApellido1;
     private javax.swing.JLabel lblApellido2;
     private javax.swing.JLabel lblDNI;
@@ -294,6 +442,7 @@ public class VerCliente extends javax.swing.JDialog {
     private javax.swing.JLabel lblProvincia;
     private javax.swing.JPanel panelCliente;
     private javax.swing.JPanel panelContratos;
+    private javax.swing.JTable tblContratos;
     private javax.swing.JTextField txtApellido1Cliente;
     private javax.swing.JTextField txtApellido2Cliente;
     private javax.swing.JTextField txtDNICliente;

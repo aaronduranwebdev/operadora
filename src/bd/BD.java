@@ -1,11 +1,10 @@
 package bd;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import utils.Utilidades;
 
 /**
- * Clase BD que genera una conexión a base de datos
+ * Clase para instancia única de conexión a base de datos
  *
  * @author Aarón Durán
  * @author Alejandro Fonterosa
@@ -13,25 +12,30 @@ import java.sql.SQLException;
  */
 public class BD {
 
-    public Connection conexion;
+    private static BD instancia;
+    private static final String[] CONFIG_BD = Utilidades.leerConfiguracionBD();
 
-    private String dbURL;
-    private String dbUsuario;
-    private String dbContraseña;
+    private static Connection conn = null;
 
-    public BD(String dbURL, String dbUsuario, String dbContraseña) {
-        this.dbURL = dbURL;
-        this.dbUsuario = dbUsuario;
-        this.dbContraseña = dbContraseña;
-        this.conexion = null;
-
+    private BD() {
         try {
-            conexion = DriverManager.getConnection(this.dbURL, this.dbUsuario, this.dbContraseña);
-            //System.out.println("Conectado");
-
+            conn = DriverManager.getConnection("jdbc:mysql://" + CONFIG_BD[0] + ":" + CONFIG_BD[1] + "/" + CONFIG_BD[2], CONFIG_BD[3], CONFIG_BD[4]);
         } catch (SQLException e) {
-            System.out.println("Consulta fallida: " + e.getMessage());
+            System.err.println("No se ha podido establecer la conexión a la base de datos");
         }
     }
 
+    public Connection conexionBD() {
+        return conn;
+    }
+
+    public static BD obtenerInstancia() throws SQLException {
+        if (instancia == null) {
+            instancia = new BD();
+
+        } else if (instancia.conexionBD().isClosed()) {
+            instancia = new BD();
+        }
+        return instancia;
+    }
 }

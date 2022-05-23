@@ -2,20 +2,22 @@ package operadora;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
+ * @author Alejandro Fonterosa
+ * @author Germán Vaquero
  */
 public class Contrato {
 
     private int id;
-    private int cliente;
+    private String cliente;
     private String iban;
     private boolean fijo;
     private double precioFijo;
     private boolean internet;
-    private boolean precioInternet;
+    private double precioInternet;
     private boolean movil;
 
-    public Contrato(int id, int cliente, String iban, boolean fijo, double precioFijo, boolean internet, boolean precioInternet, boolean movil) {
+    public Contrato(int id, String cliente, String iban, boolean fijo, double precioFijo, boolean internet, double precioInternet, boolean movil) {
         this.id = id;
         this.cliente = cliente;
         this.iban = iban;
@@ -30,7 +32,7 @@ public class Contrato {
         return id;
     }
 
-    public int getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
@@ -50,12 +52,17 @@ public class Contrato {
         return internet;
     }
 
-    public boolean isPrecioInternet() {
+    public double getPrecioInternet() {
         return precioInternet;
     }
 
     public boolean isMovil() {
         return movil;
+    }
+
+    @Override
+    public String toString() {
+        return "Contrato{" + "cliente=" + cliente + ", iban=" + iban + ", fijo=" + fijo + ", precioFijo=" + precioFijo + ", internet=" + internet + ", precioInternet=" + precioInternet + ", movil=" + movil + '}';
     }
 
 }
