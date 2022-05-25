@@ -110,6 +110,8 @@ public class AñadirContrato extends javax.swing.JDialog {
             }
         });
 
+        lblCaracteresIBAN.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+
         javax.swing.GroupLayout panelBasicoLayout = new javax.swing.GroupLayout(panelBasico);
         panelBasico.setLayout(panelBasicoLayout);
         panelBasicoLayout.setHorizontalGroup(
@@ -314,6 +316,7 @@ public class AñadirContrato extends javax.swing.JDialog {
                     String[] resultado;
                     resultado = BDInsertar.insertarContrato(nuevoContrato);
                     if (resultado[0].equals("1")) {
+                        Log.escribirLog(Log.INFO, "Contrato " + resultado[1] + " para el cliente " + nuevoContrato.getCliente() + " insertado");
                         if (chkMoviles.isSelected()) {
                             LineaMovil nuevoMovil;
                             DefaultTableModel tabla = (DefaultTableModel) tblLineasMoviles.getModel();
@@ -326,7 +329,10 @@ public class AñadirContrato extends javax.swing.JDialog {
                             if (tabla.getRowCount() > 0) {
                                 for (int i = 0; i < tabla.getRowCount(); i++) {
                                     nuevoMovil = new LineaMovil(Integer.parseInt(resultado[1]), tabla.getValueAt(i, 0).toString(), (Double) tabla.getValueAt(i, 1));
-                                    BDInsertar.insertarLineaMovil(nuevoMovil);
+                                    resultado = BDInsertar.insertarLineaMovil(nuevoMovil);
+                                    if (resultado[0].equals("1")) {
+                                        Log.escribirLog(Log.INFO, "Línea móvil " + nuevoMovil.getNumTelefono() + " para el contrato " + nuevoMovil.getContrato() + " insertada");
+                                    }
                                 }
                             }
                         }
@@ -334,10 +340,9 @@ public class AñadirContrato extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "No se pudo insertar el contrato", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (SQLException e) {
-                    System.err.println(e.getMessage());
-                    System.err.println(e.getSQLState());
+                    Log.escribirLog(Log.ERROR, e.getSQLState());
                 } catch (NullPointerException e) {
-                    System.err.println(e.getMessage());
+                    Log.escribirLog(Log.ERROR, e.getMessage());
                 }
             }
 

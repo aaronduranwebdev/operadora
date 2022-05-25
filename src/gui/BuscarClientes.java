@@ -50,11 +50,6 @@ public class BuscarClientes extends javax.swing.JDialog {
 
         lblBuscarClientes.setText("Buscar clientes");
 
-        txtBuscarClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarClientesActionPerformed(evt);
-            }
-        });
         txtBuscarClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarClientesKeyPressed(evt);
@@ -190,10 +185,6 @@ public class BuscarClientes extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_txtBuscarClientesKeyPressed
-
-    private void txtBuscarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarClientesActionPerformed
 
     private void tblResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadosMouseClicked
         if (evt.getClickCount() == 2) {

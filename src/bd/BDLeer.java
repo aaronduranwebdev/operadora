@@ -18,17 +18,15 @@ import utils.Provincias;
 public class BDLeer {
 
     //private static String[] CONFIG_DB = Utilidades.leerConfiguracion();
-
     /**
      * Método que busca clientes por nombre/apellidos
      *
      * @param busqueda Cadena a buscar
-     * @return Array de clientes
+     * @return Array de objetos {@link Cliente}
      * @throws SQLException Excepción SQL si falla la consulta
      */
     public static ArrayList<Cliente> buscarClientes(String busqueda) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_clientes WHERE MATCH (nombre, apellido1, apellido2) AGAINST (? IN BOOLEAN MODE)");
         preStmt.setString(1, busqueda); // AL PRIMER INTERROGANTE LE ASIGNA LA VARIABLE BUSQUEDA
         ResultSet rs = preStmt.executeQuery(); // CREAR UN OBJETO RESULTSET
@@ -42,10 +40,16 @@ public class BDLeer {
         return lista;
     }
 
+    /**
+     * Método que obtiene información de un cliente a partir del DNI
+     *
+     * @param dni DNI del cliente
+     * @return Objeto {@link Cliente} con la información
+     * @throws SQLException Excepción SQL si falla la consulta
+     */
     public static Cliente leerCliente(String dni) throws SQLException {
         Cliente cliente = null;
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_clientes WHERE dni = ?");
         preStmt.setString(1, dni);
         ResultSet rs = preStmt.executeQuery();
@@ -57,10 +61,31 @@ public class BDLeer {
         cx.close();
         return cliente;
     }
-    /*public static String buscarPorTelefono(String telefono) throws SQLException {
+
+    /**
+     * Método que obtiene el DNI asociado a una línea móvil
+     *
+     * @param telefono Número de teléfono de la línea móvil
+     * @return DNI del cliente
+     * @throws SQLException Excepción SQL si falla la consulta
+     */
+    public static String buscarPorTelefono(String telefono) throws SQLException {
+        String dni = "";
         Connection cx = BD.obtenerInstancia().conexionBD();
-        PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_clientes WHERE")
-    }*/
+        PreparedStatement preStmt = cx.prepareStatement("SELECT dni FROM t_clientes AS cliente "
+                + "INNER JOIN t_contratos AS contrato "
+                + "ON cliente.dni = contrato.cliente "
+                + "INNER JOIN t_lineasmoviles AS moviles "
+                + "ON contrato.id = moviles.contrato "
+                + "WHERE moviles.numTelefono = ?");
+        preStmt.setString(1, telefono);
+        ResultSet rs = preStmt.executeQuery();
+        if (rs.next()) {
+            dni = rs.getString(1);
+        }
+        return dni;
+    }
+
     /**
      * Método que devuelve el listado completo de clientes
      *
@@ -69,7 +94,6 @@ public class BDLeer {
      */
     public static ArrayList<Cliente> listaClientes() throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_clientes");
         ResultSet rs = preStmt.executeQuery();
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -83,9 +107,14 @@ public class BDLeer {
         return clientes;
     }
 
+    /**
+     * Método que obtiene todos los contratos de un cliente
+     * @param dni DNI del cliente
+     * @return ArrayList de objetos {@link Contrato}
+     * @throws SQLException Excepción SQL si falla la consulta
+     */
     public static ArrayList<Contrato> listaContratos(String dni) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_contratos WHERE cliente = ?");
         preStmt.setString(1, dni);
         ResultSet rs = preStmt.executeQuery();
@@ -100,9 +129,14 @@ public class BDLeer {
 
     }
 
+    /**
+     * Método que obtiene todas las líneas móviles asociadas a un contrato
+     * @param contrato Identificador del contrato
+     * @return ArrayList de objetos {@link LineaMovil}
+     * @throws SQLException Excepción SQL si falla la consulta
+     */
     public static ArrayList<LineaMovil> listaLineaMoviles(int contrato) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("SELECT * FROM t_lineasmoviles WHERE contrato = ?");
         preStmt.setInt(1, contrato);
         ResultSet rs = preStmt.executeQuery();

@@ -11,12 +11,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
+ * Clase Log que permite leer y escribir archivos de registro
+ *
  * @author Aarón Durán
  * @author Alejandro Fonterosa
  * @author Germán Vaquero
  */
 public class Log {
 
+    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
+    private static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-uuuu");
     /**
      * Constante con el código ERROR
      */
@@ -27,9 +31,6 @@ public class Log {
      */
     public static final String INFO = "INFO";
 
-    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
-    private static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-uuuu");
-
     /**
      * Método que escribe una línea de log en un archivo
      *
@@ -39,13 +40,12 @@ public class Log {
     public static void escribirLog(String nivelLog, String mensaje) {
         String lineaLog = nivelLog + "///" + formatoFechaHora.format(LocalDateTime.now()) + "///" + mensaje + "\n";
         File archivo = new File("logs" + File.separator + formatoFecha.format(LocalDateTime.now()) + ".log");
-        // El valor true en el objeto FileWriter permite añadir líneas al archivo
+        // El valor true en el objeto FileWriter permite añadir líneas al archivo y no sobrescribirlo
         try ( FileWriter fw = new FileWriter(archivo, true);  BufferedWriter bfw = new BufferedWriter(fw)) {
             bfw.write(lineaLog);
         } catch (IOException e) {
             System.err.println(e);
         }
-
     }
 
     /**

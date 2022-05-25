@@ -15,18 +15,15 @@ import operadora.LineaMovil;
  */
 public class BDInsertar {
 
-    //private static String[] CONFIG_DB = Utilidades.leerConfiguracion();
-
     /**
      * Método que inserta un nuevo cliente en la base de datos
      *
-     * @param nuevoCliente Objeto Cliente con los datos del cliente
+     * @param nuevoCliente Objeto {@link Cliente} con los datos del cliente
      * @return Array de Strings con el resultado de la operación
      * @throws SQLException Excepción SQL si falla la consulta
      */
     public static String[] insertarCliente(Cliente nuevoCliente) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("CALL insertarCliente (?,?,?,?,?,?,?,?, @OK, @dniCliente, @mensaje)");
         preStmt.setString(1, nuevoCliente.getDni());
         preStmt.setString(2, nuevoCliente.getNombre());
@@ -65,13 +62,12 @@ public class BDInsertar {
     /**
      * Método que inserta un nuevo contrato en la base de datos
      *
-     * @param nuevoContrato Objeto Contrato con los datos del contrato
+     * @param nuevoContrato Objeto {@link Contrato} con los datos del contrato
      * @return Array de Strings con el resultado de la operación
      * @throws SQLException Excepción SQL si falla la consulta
      */
     public static String[] insertarContrato(Contrato nuevoContrato) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("CALL insertarContrato(?, ?, ?, ?, ?, ?, ?, @OK, @idContrato, @mensaje)");
         preStmt.setString(1, nuevoContrato.getCliente());
         preStmt.setString(2, nuevoContrato.getIban());
@@ -93,13 +89,12 @@ public class BDInsertar {
                 if (rs.next()) {
                     resultado[1] = rs.getString(1);
                 }
-
             } else {
                 resultado[0] = "0";
                 resultado[1] = "No se pudo insertar el contrato";
             }
-
         }
+        rs.close();
         preStmt.close();
         cx.close();
         return resultado;
@@ -108,13 +103,12 @@ public class BDInsertar {
     /**
      * Método que inserta una nueva línea móvil en la base de datos
      *
-     * @param nuevaLineaMovil Objeto LineaMovil con los datos de la línea
+     * @param nuevaLineaMovil Objeto {@link LineaMovil} con los datos de la línea
      * @return Array de Strings con el resultado de la operación
      * @throws SQLException Excepción SQL si falla la consulta
      */
     public static String[] insertarLineaMovil(LineaMovil nuevaLineaMovil) throws SQLException {
         Connection cx = BD.obtenerInstancia().conexionBD();
-        //Connection cx = DriverManager.getConnection("jdbc:mysql://" + CONFIG_DB[0] + ":" + CONFIG_DB[1] + "/" + CONFIG_DB[2], CONFIG_DB[3], CONFIG_DB[4]);
         PreparedStatement preStmt = cx.prepareStatement("CALL insertarLineaMovil(?, ?, ?, @OK, @idLineaMovil, @mensaje)");
         preStmt.setInt(1, nuevaLineaMovil.getContrato());
         preStmt.setString(2, nuevaLineaMovil.getNumTelefono());
@@ -138,6 +132,7 @@ public class BDInsertar {
                 resultado[1] = "No se pudo insertar la línea móvil";
             }
         }
+        rs.close();
         preStmt.close();
         cx.close();
         return resultado;

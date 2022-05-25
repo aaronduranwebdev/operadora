@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuracion>
-	<urlbd>jdbc:mysql://localhost:3307/operadora</urlbd>
-	<usuario>root</usuario>
-	<contraseña>root</contraseña>
-</configuracion>

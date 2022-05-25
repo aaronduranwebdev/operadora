@@ -36,10 +36,10 @@ public class VerCliente extends javax.swing.JDialog {
                 this.dniCliente = JOptionPane.showInputDialog("Introduce el DNI:");
                 if (this.dniCliente.isEmpty()) {
                     System.err.println("No se ha detectado ningún DNI");
-                    dispose();
+                    this.dispose();
                 }
             } catch (NullPointerException e) {
-                System.out.println(e.getMessage());
+                System.err.println("No se ha introducido ningún DNI. Falta implementar método que cierre la ventana.");
             }
         } else {
             this.dniCliente = dni;
@@ -357,6 +357,7 @@ public class VerCliente extends javax.swing.JDialog {
     // FIN VISTA
     // CONTROLADOR
     private void tblContratosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblContratosMouseClicked
+        // Detectar pulsación doble
         if (evt.getClickCount() == 2) {
             JTable tabla = (JTable) evt.getSource();
             if (tabla.getValueAt(tabla.getSelectedRow(), 5).toString().equals("true")) {
@@ -386,6 +387,7 @@ public class VerCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAñadirContratoActionPerformed
     // FIN CONTROLADOR
+
     /**
      * @param args the command line arguments
      */

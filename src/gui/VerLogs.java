@@ -1,9 +1,7 @@
 package gui;
 
-import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,14 +22,18 @@ public class VerLogs extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         JFileChooser dialogoArchivo = new JFileChooser(".");
-        int val = dialogoArchivo.showOpenDialog(parent);
-        if (val == 0) {
-            archivo = dialogoArchivo.getSelectedFile();
-            cargarLogs();
-        } else {
-            JOptionPane.showMessageDialog(parent, "No se ha seleccionado ningún archivo de log", "Error", JOptionPane.ERROR_MESSAGE);
-            this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            this.dispose();
+        try {
+            int val = dialogoArchivo.showOpenDialog(parent);
+            if (val == 0) {
+                archivo = dialogoArchivo.getSelectedFile();
+                cargarLogs();
+            } else {
+                JOptionPane.showMessageDialog(parent, "No se ha seleccionado ningún archivo de log", "Error", JOptionPane.ERROR_MESSAGE);
+                // La idea es cerrar automáticamente la ventana al no seleccionar un archivo, pero desconozco la manera de hacerlo
+                this.dispose();
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 

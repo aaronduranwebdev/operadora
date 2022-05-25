@@ -222,12 +222,9 @@ public class AñadirCliente extends javax.swing.JDialog {
             resultado = BDInsertar.insertarCliente(nuevoCliente);
             if (resultado[0].equals("1")) {
                 Log.escribirLog(Log.INFO, "Cliente insertado: " + resultado[1]);
-            } else {
-                Log.escribirLog(Log.ERROR, "No se ha podido insertar el cliente");
             }
         } catch (SQLException e) {
-            Log.escribirLog(Log.ERROR, "No se ha podido insertar el cliente");
-            System.err.println("No se ha podido insertar el cliente. " + e.getSQLState());
+            Log.escribirLog(Log.ERROR, "No se ha podido insertar el cliente " + e.getSQLState());
         }
     }//GEN-LAST:event_btnAñadirActionPerformed
 

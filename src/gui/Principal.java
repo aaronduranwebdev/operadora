@@ -1,9 +1,14 @@
 package gui;
 
-import java.awt.Dimension;
+import bd.BDLeer;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import utils.XML;
 
 /**
  *
@@ -19,6 +24,20 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
+        String[] apariencia = XML.leerConfiguracion();
+        /*
+            Cambiar el tamaño de la fuente implicaría redimensionar los 
+            componentes para que se mostrasen correctamente
+         */
+        Font fuente = new Font(apariencia[0], Integer.valueOf(apariencia[1]), 12);
+        // Los botones tienen como parent un JPanel
+        for (Component componente : panelPrincipal.getComponents()) {
+            if (componente instanceof JButton) {
+                JButton boton = (JButton) componente;
+                boton.setFont(fuente);
+            }
+        }
+
     }
 
     /**
@@ -34,7 +53,7 @@ public class Principal extends javax.swing.JFrame {
         lblBusqueda = new javax.swing.JLabel();
         btnVerCliente = new javax.swing.JButton();
         btnVerTelefono = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        separador = new javax.swing.JSeparator();
         lblAñadir = new javax.swing.JLabel();
         btnAñadirCliente = new javax.swing.JButton();
         btnAñadirContrato = new javax.swing.JButton();
@@ -47,12 +66,9 @@ public class Principal extends javax.swing.JFrame {
         mSeparadorArchivo = new javax.swing.JPopupMenu.Separator();
         mSalir = new javax.swing.JMenuItem();
         mClientes = new javax.swing.JMenu();
-        mBuscar = new javax.swing.JMenuItem();
         mListarClientes = new javax.swing.JMenuItem();
-        mSeparador1 = new javax.swing.JPopupMenu.Separator();
-        mAñadir = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mAyuda = new javax.swing.JMenu();
+        mAcercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Operadora TeisMobile");
@@ -60,9 +76,9 @@ public class Principal extends javax.swing.JFrame {
 
         panelPrincipal.setMinimumSize(new java.awt.Dimension(50, 100));
 
+        lblBusqueda.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblBusqueda.setText("Búsqueda");
 
-        btnVerCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnVerCliente.setText("DNI");
         btnVerCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +86,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnVerTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnVerTelefono.setText("Teléfono");
         btnVerTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,11 +93,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        separador.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        lblAñadir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAñadir.setText("Añadir");
 
-        btnAñadirCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAñadirCliente.setMnemonic('S');
         btnAñadirCliente.setText("Cliente");
         btnAñadirCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +106,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnAñadirContrato.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAñadirContrato.setText("Contrato");
         btnAñadirContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,10 +113,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnAñadirMovil.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAñadirMovil.setText("Línea móvil");
+        btnAñadirMovil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirMovilActionPerformed(evt);
+            }
+        });
 
-        btnBuscarNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscarNombre.setText("Nombre/Apell.");
         btnBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,25 +132,30 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBuscarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(lblBusqueda))
-                    .addComponent(btnVerCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVerTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(lblAñadir))
-                    .addComponent(btnAñadirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAñadirContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBuscarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(lblBusqueda)))
+                .addGap(39, 39, 39)
+                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAñadirContrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAñadirCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAñadirMovil, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                        .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblAñadir)
+                        .addGap(69, 69, 69))))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +166,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblAñadir)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnAñadirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnAñadirContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,7 +174,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblBusqueda)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnVerTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator1)))
+                        .addComponent(separador)))
                 .addContainerGap())
         );
 
@@ -198,15 +220,6 @@ public class Principal extends javax.swing.JFrame {
 
         mClientes.setText("Clientes");
 
-        mBuscar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mBuscar.setText("Buscar");
-        mBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mBuscarActionPerformed(evt);
-            }
-        });
-        mClientes.add(mBuscar);
-
         mListarClientes.setText("Listar clientes");
         mListarClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,30 +227,20 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mClientes.add(mListarClientes);
-        mClientes.add(mSeparador1);
-
-        mAñadir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mAñadir.setText("Añadir");
-        mAñadir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mAñadirActionPerformed(evt);
-            }
-        });
-        mClientes.add(mAñadir);
 
         menuPrincipal.add(mClientes);
 
-        jMenu1.setText("Ayuda");
+        mAyuda.setText("Ayuda");
 
-        jMenuItem2.setText("Acerca de...");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        mAcercaDe.setText("Acerca de...");
+        mAcercaDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                mAcercaDeActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        mAyuda.add(mAcercaDe);
 
-        menuPrincipal.add(jMenu1);
+        menuPrincipal.add(mAyuda);
 
         setJMenuBar(menuPrincipal);
 
@@ -254,20 +257,13 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void mBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mBuscarActionPerformed
-
-    }//GEN-LAST:event_mBuscarActionPerformed
-
-    private void mAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAñadirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mAñadirActionPerformed
 
     private void mListarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListarClientesActionPerformed
         try {
             ListarClientes listarClientes = new ListarClientes(this, rootPaneCheckingEnabled);
             listarClientes.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_mListarClientesActionPerformed
 
@@ -276,8 +272,8 @@ public class Principal extends javax.swing.JFrame {
             VerCliente verCliente = new VerCliente(this, rootPaneCheckingEnabled, "");
             verCliente.setVisible(true);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_btnVerClienteActionPerformed
 
@@ -285,8 +281,8 @@ public class Principal extends javax.swing.JFrame {
         try {
             AñadirCliente añadirCliente = new AñadirCliente(this, rootPaneCheckingEnabled);
             añadirCliente.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_btnAñadirClienteActionPerformed
 
@@ -295,8 +291,8 @@ public class Principal extends javax.swing.JFrame {
             AñadirContrato añadirContrato = new AñadirContrato(this, rootPaneCheckingEnabled, "");
             añadirContrato.setVisible(true);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_btnAñadirContratoActionPerformed
 
@@ -316,21 +312,26 @@ public class Principal extends javax.swing.JFrame {
         try {
             BuscarClientes buscarCliente = new BuscarClientes(this, rootPaneCheckingEnabled);
             buscarCliente.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_btnBuscarNombreActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void mAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAcercaDeActionPerformed
+        String acercaDe = "<html><p>Proyecto para la 3ª evaluación de Programación en el ciclo superior de DAW - IES de Teis</p>"
+                + "<p>Creado por:</p>"
+                + "<ul><li>Aarón Durán</li>"
+                + "<li>Alejandro Fonterosa</li>"
+                + "<li>Germán Vaquero</li></ul></html>";
+        JOptionPane.showMessageDialog(this, acercaDe, "Acerca de...", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_mAcercaDeActionPerformed
 
     private void mVerRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mVerRegistroActionPerformed
         try {
             VerLogs verLogs = new VerLogs(this, rootPaneCheckingEnabled);
             verLogs.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_mVerRegistroActionPerformed
 
@@ -338,16 +339,36 @@ public class Principal extends javax.swing.JFrame {
         try {
             Configuracion configuracion = new Configuracion(this, rootPaneCheckingEnabled);
             configuracion.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
         }
     }//GEN-LAST:event_mConfiguracionActionPerformed
 
     private void btnVerTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTelefonoActionPerformed
-        /*try {
-            
-        }*/
+        String telefono = "";
+        String dni = "";
+        try {
+            telefono = JOptionPane.showInputDialog(this, "Introduce el teléfono", "Atención", JOptionPane.QUESTION_MESSAGE);
+            if (!telefono.isEmpty()) {
+                dni = BDLeer.buscarPorTelefono(telefono);
+                VerCliente verCliente = new VerCliente(this, rootPaneCheckingEnabled, dni);
+                verCliente.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debes introducir un teléfono", "Error", JOptionPane.ERROR);
+            }
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
+        }
     }//GEN-LAST:event_btnVerTelefonoActionPerformed
+
+    private void btnAñadirMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirMovilActionPerformed
+        try {
+            AñadirLineaMovil añadirLineaMovil = new AñadirLineaMovil(this, rootPaneCheckingEnabled);
+            añadirLineaMovil.setVisible(true);
+        } catch (Exception e) {
+            System.err.println("Se canceló la acción");
+        }
+    }//GEN-LAST:event_btnAñadirMovilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,22 +405,19 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarNombre;
     private javax.swing.JButton btnVerCliente;
     private javax.swing.JButton btnVerTelefono;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAñadir;
     private javax.swing.JLabel lblBusqueda;
+    private javax.swing.JMenuItem mAcercaDe;
     private javax.swing.JMenu mArchivo;
-    private javax.swing.JMenuItem mAñadir;
-    private javax.swing.JMenuItem mBuscar;
+    private javax.swing.JMenu mAyuda;
     private javax.swing.JMenu mClientes;
     private javax.swing.JMenuItem mConfiguracion;
     private javax.swing.JMenuItem mListarClientes;
     private javax.swing.JMenuItem mSalir;
-    private javax.swing.JPopupMenu.Separator mSeparador1;
     private javax.swing.JPopupMenu.Separator mSeparadorArchivo;
     private javax.swing.JMenuItem mVerRegistro;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JSeparator separador;
     // End of variables declaration//GEN-END:variables
 }
