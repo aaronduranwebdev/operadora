@@ -4,8 +4,7 @@ package operadora;
  * Clase que almacena la información sobre una línea móvil
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class LineaMovil {
 

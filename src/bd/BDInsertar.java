@@ -9,8 +9,6 @@ import operadora.LineaMovil;
  * Métodos de inserción de clientes, contratos y líneas en la base de datos
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
  * @version 2
  */
 public class BDInsertar {
@@ -103,7 +101,8 @@ public class BDInsertar {
     /**
      * Método que inserta una nueva línea móvil en la base de datos
      *
-     * @param nuevaLineaMovil Objeto {@link LineaMovil} con los datos de la línea
+     * @param nuevaLineaMovil Objeto {@link LineaMovil} con los datos de la
+     * línea
      * @return Array de Strings con el resultado de la operación
      * @throws SQLException Excepción SQL si falla la consulta
      */
@@ -126,7 +125,6 @@ public class BDInsertar {
                 if (rs.next()) {
                     resultado[1] = rs.getString(1);
                 }
-
             } else {
                 resultado[0] = "0";
                 resultado[1] = "No se pudo insertar la línea móvil";

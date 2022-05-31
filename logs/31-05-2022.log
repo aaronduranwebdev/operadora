@@ -1,0 +1,13 @@
+ERROR///31/05/2022 09:53:25///No se ha podido insertar el cliente 42000
+ERROR///31/05/2022 09:56:36///No se ha podido insertar el cliente 42000
+INFO///31/05/2022 09:58:10///Cliente insertado: 39487118M
+INFO///31/05/2022 09:58:45///Acceso a cliente: 39487118M
+INFO///31/05/2022 09:58:45///Acceso a contratos de cliente: 39487118M
+INFO///31/05/2022 09:58:58///Contrato 53 para el cliente 39487118M insertado
+ERROR///31/05/2022 09:58:58///42000
+INFO///31/05/2022 09:59:24///Contrato 54 para el cliente 39487118M insertado
+ERROR///31/05/2022 09:59:24///null
+INFO///31/05/2022 10:00:47///Acceso a cliente: 39487118M
+INFO///31/05/2022 10:00:47///Acceso a contratos de cliente: 39487118M
+INFO///31/05/2022 10:01:09///Contrato 55 para el cliente 39487118M insertado
+INFO///31/05/2022 10:01:09///Línea móvil 691000011 para el contrato 55 insertada

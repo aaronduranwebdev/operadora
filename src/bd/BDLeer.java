@@ -12,8 +12,6 @@ import utils.Provincias;
  * Métodos para lectura de clientes, contratos y líneas desde la base de datos
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
  */
 public class BDLeer {
 
@@ -109,6 +107,7 @@ public class BDLeer {
 
     /**
      * Método que obtiene todos los contratos de un cliente
+     *
      * @param dni DNI del cliente
      * @return ArrayList de objetos {@link Contrato}
      * @throws SQLException Excepción SQL si falla la consulta
@@ -131,6 +130,7 @@ public class BDLeer {
 
     /**
      * Método que obtiene todas las líneas móviles asociadas a un contrato
+     *
      * @param contrato Identificador del contrato
      * @return ArrayList de objetos {@link LineaMovil}
      * @throws SQLException Excepción SQL si falla la consulta

@@ -4,8 +4,7 @@ package utils;
  * Enumeración de provincias
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public enum Provincias {
     PO("Pontevedra"), LU("Lugo"), CO("A Coruña"), OU("Ourense");

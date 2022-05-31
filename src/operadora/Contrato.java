@@ -2,9 +2,9 @@ package operadora;
 
 /**
  * Clase Contrato que almacena la información sobre un contrato
+ *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class Contrato {
 

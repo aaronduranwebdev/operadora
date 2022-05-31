@@ -10,8 +10,7 @@ import operadora.Cliente;
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+
  */
 public class ListarClientes extends javax.swing.JDialog {
 
@@ -22,6 +21,7 @@ public class ListarClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
+        setTitle("Listar todos los clientes");
         DefaultTableModel tabla = (DefaultTableModel) tblClientes.getModel();
         ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
         Cliente cliente = null;

@@ -14,8 +14,7 @@ import java.util.ArrayList;
  * Clase Log que permite leer y escribir archivos de registro
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class Log {
 
@@ -41,7 +40,7 @@ public class Log {
         String lineaLog = nivelLog + "///" + formatoFechaHora.format(LocalDateTime.now()) + "///" + mensaje + "\n";
         File archivo = new File("logs" + File.separator + formatoFecha.format(LocalDateTime.now()) + ".log");
         // El valor true en el objeto FileWriter permite añadir líneas al archivo y no sobrescribirlo
-        try ( FileWriter fw = new FileWriter(archivo, true);  BufferedWriter bfw = new BufferedWriter(fw)) {
+        try (FileWriter fw = new FileWriter(archivo, true); BufferedWriter bfw = new BufferedWriter(fw)) {
             bfw.write(lineaLog);
         } catch (IOException e) {
             System.err.println(e);
@@ -58,7 +57,7 @@ public class Log {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = new File(ruta);
 
-        try ( FileReader fr = new FileReader(archivo);  BufferedReader leer = new BufferedReader(fr)) {
+        try (FileReader fr = new FileReader(archivo); BufferedReader leer = new BufferedReader(fr)) {
             String linea;
             while ((linea = leer.readLine()) != null) {
                 lineas.add(linea);

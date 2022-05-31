@@ -9,7 +9,7 @@ import utils.Log;
 
 /**
  *
- * @author a21aarondn
+ * @author Aarón Durán
  */
 public class VerLogs extends javax.swing.JDialog {
 
@@ -21,6 +21,7 @@ public class VerLogs extends javax.swing.JDialog {
     public VerLogs(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Registros");
         JFileChooser dialogoArchivo = new JFileChooser(".");
         try {
             int val = dialogoArchivo.showOpenDialog(parent);

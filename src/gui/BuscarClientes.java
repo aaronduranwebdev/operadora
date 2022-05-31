@@ -13,8 +13,7 @@ import utils.Log;
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+
  */
 public class BuscarClientes extends javax.swing.JDialog {
 
@@ -25,6 +24,7 @@ public class BuscarClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
+        setTitle("Buscar clientes");
     }
 
     /**

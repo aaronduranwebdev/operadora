@@ -14,8 +14,7 @@ import utils.Log;
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+
  */
 public class VerCliente extends javax.swing.JDialog {
 
@@ -29,20 +28,20 @@ public class VerCliente extends javax.swing.JDialog {
      */
     public VerCliente(java.awt.Frame parent, boolean modal, String dni) {
         super(parent, modal);
+        boolean clienteLeido = false;
         initComponents();
         setLocationRelativeTo(parent);
         if (dni.isEmpty()) {
             try {
-                this.dniCliente = JOptionPane.showInputDialog("Introduce el DNI:");
-                if (this.dniCliente.isEmpty()) {
-                    System.err.println("No se ha detectado ningún DNI");
+                dniCliente = JOptionPane.showInputDialog(parent, "Introduce el DNI", "Atención", JOptionPane.INFORMATION_MESSAGE);
+                if (dniCliente.isEmpty()) {
                     this.dispose();
                 }
             } catch (NullPointerException e) {
-                System.err.println("No se ha introducido ningún DNI. Falta implementar método que cierre la ventana.");
+                this.dispose();
             }
         } else {
-            this.dniCliente = dni;
+            dniCliente = dni;
         }
         try {
             Cliente cliente = BDLeer.leerCliente(dniCliente);
@@ -57,38 +56,43 @@ public class VerCliente extends javax.swing.JDialog {
             establecerCampoTexto(txtNacionalidadCliente, cliente.getNacionalidad().toString());
             establecerCampoTexto(txtLocalidadCliente, cliente.getLocalidad());
             establecerCampoTexto(txtProvinciaCliente, cliente.getProvincia().toString());
-            Log.escribirLog(Log.INFO, "Acceso a cliente: " + cliente.getDni());
+            Log.escribirLog(Log.INFO, "Acceso a cliente: " + dniCliente);
+            clienteLeido = true;
         } catch (SQLException e) {
             Log.escribirLog(Log.ERROR, e.getSQLState());
         } catch (NullPointerException e) {
             Log.escribirLog(Log.ERROR, e.toString());
         }
-        DefaultTableModel tabla = (DefaultTableModel) tblContratos.getModel();
-        ArrayList<Contrato> listaContratos = new ArrayList<>();
-        Contrato contrato;
-        try {
-            listaContratos = BDLeer.listaContratos(dniCliente);
-            tabla.setRowCount(listaContratos.size());
+        // Si se leyó la información del cliente, se leen sus contratos
+        if (clienteLeido == true) {
+            DefaultTableModel tabla = (DefaultTableModel) tblContratos.getModel();
+            ArrayList<Contrato> listaContratos;
+            Contrato contrato;
+            try {
+                listaContratos = BDLeer.listaContratos(dniCliente);
+                tabla.setRowCount(listaContratos.size());
 
-            tblContratos.setModel(tabla);
-            for (int i = 0; i < listaContratos.size(); i++) {
-                contrato = listaContratos.get(i);
-                tblContratos.setValueAt(contrato.getIban(), i, 0);
-                tblContratos.setValueAt(contrato.isFijo(), i, 1);
-                tblContratos.setValueAt(contrato.getPrecioFijo(), i, 2);
-                tblContratos.setValueAt(contrato.isInternet(), i, 3);
-                tblContratos.setValueAt(contrato.getPrecioInternet(), i, 4);
-                tblContratos.setValueAt(contrato.isMovil(), i, 5);
-                tblContratos.setValueAt(contrato.getId(), i, 6);
+                tblContratos.setModel(tabla);
+                for (int i = 0; i < listaContratos.size(); i++) {
+                    contrato = listaContratos.get(i);
+                    tblContratos.setValueAt(contrato.getIban(), i, 0);
+                    tblContratos.setValueAt(contrato.isFijo(), i, 1);
+                    tblContratos.setValueAt(contrato.getPrecioFijo(), i, 2);
+                    tblContratos.setValueAt(contrato.isInternet(), i, 3);
+                    tblContratos.setValueAt(contrato.getPrecioInternet(), i, 4);
+                    tblContratos.setValueAt(contrato.isMovil(), i, 5);
+                    tblContratos.setValueAt(contrato.getId(), i, 6);
+                }
+                // Oculto la última columna
+                tblContratos.getColumnModel().getColumn(6).setMinWidth(0);
+                tblContratos.getColumnModel().getColumn(6).setMaxWidth(0);
+                tblContratos.getColumnModel().getColumn(6).setWidth(0);
+                // Establecer ancho de columna IBAN
+                tblContratos.getColumnModel().getColumn(0).setPreferredWidth(145);
+                Log.escribirLog(Log.INFO, "Acceso a contratos de cliente: " + dniCliente);
+            } catch (SQLException e) {
+                System.out.println(e.getSQLState());
             }
-            // Oculto la última columna
-            tblContratos.getColumnModel().getColumn(6).setMinWidth(0);
-            tblContratos.getColumnModel().getColumn(6).setMaxWidth(0);
-            tblContratos.getColumnModel().getColumn(6).setWidth(0);
-            // Establecer ancho de columna IBAN
-            tblContratos.getColumnModel().getColumn(0).setPreferredWidth(145);
-        } catch (SQLException e) {
-            System.out.println(e.getSQLState());
         }
     }
 
@@ -379,7 +383,7 @@ public class VerCliente extends javax.swing.JDialog {
 
     private void btnAñadirContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirContratoActionPerformed
         try {
-            AñadirContrato añadirContrato = new AñadirContrato(null, rootPaneCheckingEnabled, dniCliente);
+            AnhadirContrato añadirContrato = new AnhadirContrato(null, rootPaneCheckingEnabled, dniCliente);
             añadirContrato.setVisible(true);
 
         } catch (Exception ex) {

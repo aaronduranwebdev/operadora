@@ -13,8 +13,6 @@ import utils.XML;
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -279,7 +277,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnAñadirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirClienteActionPerformed
         try {
-            AñadirCliente añadirCliente = new AñadirCliente(this, rootPaneCheckingEnabled);
+            AnhadirCliente añadirCliente = new AnhadirCliente(this, rootPaneCheckingEnabled);
             añadirCliente.setVisible(true);
         } catch (Exception e) {
             System.err.println("Se canceló la acción");
@@ -288,7 +286,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnAñadirContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirContratoActionPerformed
         try {
-            AñadirContrato añadirContrato = new AñadirContrato(this, rootPaneCheckingEnabled, "");
+            AnhadirContrato añadirContrato = new AnhadirContrato(this, rootPaneCheckingEnabled, "");
             añadirContrato.setVisible(true);
 
         } catch (Exception e) {
@@ -363,7 +361,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnAñadirMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirMovilActionPerformed
         try {
-            AñadirLineaMovil añadirLineaMovil = new AñadirLineaMovil(this, rootPaneCheckingEnabled);
+            AnhadirLineaMovil añadirLineaMovil = new AnhadirLineaMovil(this, rootPaneCheckingEnabled);
             añadirLineaMovil.setVisible(true);
         } catch (Exception e) {
             System.err.println("Se canceló la acción");

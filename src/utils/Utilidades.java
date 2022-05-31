@@ -14,8 +14,7 @@ import java.util.regex.Pattern;
  * Métodos con utilidades varias
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class Utilidades {
 
@@ -128,7 +127,7 @@ public class Utilidades {
         configuracion.setProperty("usuario", usuario);
         configuracion.setProperty("pass", pass);
 
-        try ( FileWriter fw = new FileWriter("configuracion.conf", Charset.forName("UTF-8"))) {
+        try (FileWriter fw = new FileWriter("configuracion.conf", Charset.forName("UTF-8"))) {
             configuracion.store(fw, "Configuración de la aplicación Operadora");
         } catch (IOException e) {
             Log.escribirLog(Log.ERROR, e.getMessage());

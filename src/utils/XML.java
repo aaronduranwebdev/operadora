@@ -12,8 +12,7 @@ import org.xml.sax.InputSource;
  * Clase XML que permite interactuar con archivos XML
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class XML {
 
@@ -24,7 +23,7 @@ public class XML {
      */
     public static String[] leerConfiguracion() {
         File archivo = new File("apariencia.xml");
-        try ( FileInputStream fis = new FileInputStream(archivo);  InputStreamReader isr = new InputStreamReader(fis, "UTF-8")) {
+        try (FileInputStream fis = new FileInputStream(archivo); InputStreamReader isr = new InputStreamReader(fis, "UTF-8")) {
             String[] configuracion = new String[3];
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dB = factory.newDocumentBuilder();

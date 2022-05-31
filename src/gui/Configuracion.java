@@ -1,12 +1,13 @@
 package gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import utils.Utilidades;
 
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+
  */
 public class Configuracion extends javax.swing.JDialog {
 
@@ -18,12 +19,17 @@ public class Configuracion extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(parent);
         setTitle("Configuración");
-        String[] CONFIG_BD = Utilidades.leerConfiguracionBD();
-        txtServidor.setText(CONFIG_BD[0]);
-        txtPuerto.setText(CONFIG_BD[1]);
-        txtBD.setText(CONFIG_BD[2]);
-        txtUsuario.setText(CONFIG_BD[3]);
-        txtPass.setText(CONFIG_BD[4]);
+        try {
+            String[] CONFIG_BD = Utilidades.leerConfiguracionBD();
+            establecerCampoTexto(txtServidor, CONFIG_BD[0]);
+            establecerCampoTexto(txtPuerto, CONFIG_BD[1]);
+            establecerCampoTexto(txtBD, CONFIG_BD[2]);
+            establecerCampoTexto(txtUsuario, CONFIG_BD[3]);
+            establecerCampoTexto(txtPass, CONFIG_BD[4]);
+        } catch (Exception e) {
+            mostrarDialogoError("No se pudo cargar la configuración.");
+            dispose();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -148,13 +154,28 @@ public class Configuracion extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    // VISTA
 
+    private void establecerCampoTexto(JTextField campo, String texto) {
+        campo.setText(texto);
+    }
+
+    private void mostrarDialogoError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // FIN VISTA
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Utilidades.escribirConfiguracionBD(txtServidor.getText(), txtPuerto.getText(), txtBD.getText(), txtUsuario.getText(), txtPass.getText());
+        try {
+            Utilidades.escribirConfiguracionBD(txtServidor.getText(), txtPuerto.getText(), txtBD.getText(), txtUsuario.getText(), txtPass.getText());
+        } catch (Exception e) {
+            mostrarDialogoError("No se pudo cargar la configuración.");
+        }
+        dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

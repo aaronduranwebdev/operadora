@@ -7,8 +7,7 @@ import utils.Provincias;
  * Clase Cliente que almacena la información relacionada con un cliente
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+ *
  */
 public class Cliente {
 

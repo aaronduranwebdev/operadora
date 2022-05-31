@@ -9,8 +9,7 @@ import operadora.LineaMovil;
 /**
  *
  * @author Aarón Durán
- * @author Alejandro Fonterosa
- * @author Germán Vaquero
+
  */
 public class VerLineasMoviles extends javax.swing.JDialog {
 
@@ -21,6 +20,7 @@ public class VerLineasMoviles extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
+        setTitle("Ver líneas móviles para el contrato: " + idContrato);
         ArrayList<LineaMovil> listaLineas = new ArrayList<>();
         LineaMovil lineaMovil;
         DefaultTableModel tabla = (DefaultTableModel) tblLineasMoviles.getModel();
@@ -57,6 +57,7 @@ public class VerLineasMoviles extends javax.swing.JDialog {
         btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         tblLineasMoviles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
