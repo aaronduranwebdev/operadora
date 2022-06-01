@@ -7,4 +7,5 @@ Proyecto realizado en Java haciendo uso de interfaces Swing, acceso a base de da
  - Aarón Durán
  
  **Notas**
+ 
 Cambiar en el archivo de configuración los datos para la conexión a la base de datos
